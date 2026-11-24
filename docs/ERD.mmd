@@ -1,0 +1,122 @@
+erDiagram
+    users ||--o{ donations : "doet"
+    users ||--o{ adoptions : "koopt"
+    animals ||--o{ adoptions : "wordt gekocht in"
+    donations ||--o| adoptions : "betaalt"
+    users ||--o{ user_decorations : "koopt"
+    decorations ||--o{ user_decorations : "wordt gekocht in"
+    donations ||--o| user_decorations : "betaalt"
+    users ||--o| aquariums : "heeft tank"
+    users ||--o{ recurring_donations : "heeft"
+    recurring_donations ||--o{ donations : "genereert"
+    recurring_donations ||--o{ recurring_donation_changes : "heeft log"
+    users ||--o{ recurring_donation_changes : "wijzigt"
+    users ||--o{ feedback : "geeft"
+    recurring_donations |o--o{ feedback : "krijgt"
+
+    users {
+        bigint id PK
+        string name
+        string email UK
+        string password
+        enum role "supporter | support | admin"
+        string username UK
+        string avatar
+        string street
+        string postal_code
+        string city
+        date date_of_birth
+        json interests
+        boolean is_public
+        timestamp created_at
+    }
+    donations {
+        bigint id PK
+        bigint user_id FK
+        bigint recurring_donation_id FK
+        decimal amount
+        enum type "one_time | recurring"
+        enum status "paid | failed | refunded"
+        string payment_method
+        boolean is_company
+        string company_name
+        string kvk_number
+        string invoice_number UK
+        timestamp created_at
+    }
+    recurring_donations {
+        bigint id PK
+        bigint user_id FK
+        decimal amount
+        enum frequency "monthly | quarterly | yearly"
+        tinyint payment_day
+        string payment_method
+        enum status "active | paused | cancelled"
+        date paused_until
+        datetime cancelled_at
+        timestamp created_at
+    }
+    recurring_donation_changes {
+        bigint id PK
+        bigint recurring_donation_id FK
+        bigint changed_by FK "users.id"
+        string field
+        string old_value
+        string new_value
+        timestamp created_at
+    }
+    feedback {
+        bigint id PK
+        bigint user_id FK
+        bigint recurring_donation_id FK
+        enum type "cancel_reason | satisfaction"
+        tinyint score
+        string reason
+        text comment
+        timestamp created_at
+    }
+    animals {
+        bigint id PK
+        string name
+        string species
+        enum tier "bv. common | rare | epic"
+        string image
+        string alt_text
+        decimal price
+        string impact_text
+        boolean is_active
+    }
+    decorations {
+        bigint id PK
+        string name
+        string image
+        string alt_text
+        decimal price
+        boolean is_active
+    }
+    user_decorations {
+        bigint id PK
+        bigint user_id FK
+        bigint decoration_id FK
+        bigint donation_id FK
+        boolean is_placed
+        timestamp created_at
+    }
+    adoptions {
+        bigint id PK
+        bigint user_id FK
+        bigint animal_id FK
+        bigint donation_id FK
+        string nickname
+        timestamp created_at
+    }
+    aquariums {
+        bigint id PK
+        bigint user_id FK
+        datetime last_cleaned_at
+        tinyint cleanliness
+    }
+    settings {
+        string key PK
+        string value "bv. allow_online_cancel, goal_amount"
+    }
