@@ -18,7 +18,9 @@ erDiagram
         bigint id PK
         string name
         string email UK
+        timestamp email_verified_at
         string password
+        string remember_token
         enum role "supporter | support | admin"
         string username UK
         string avatar
@@ -29,6 +31,7 @@ erDiagram
         json interests
         boolean is_public
         timestamp created_at
+        timestamp updated_at
     }
     donations {
         bigint id PK
