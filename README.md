@@ -4,7 +4,7 @@ Supporterplatform voor een goed doel dat oceanen en rivieren schoonmaakt (TLE 2 
 
 ## Documentatie
 
-- [ERD (technisch ontwerp)](docs/ERD.png) – bron in Mermaid: [docs/ERD.mmd](docs/ERD.mmd)
+- [ERD (technisch ontwerp)](docs/ERD.png) – bron in draw.io: [docs/ERD.drawio](docs/ERD.drawio)
 - Product backlog: zie de [issues](https://github.com/JoeyMalta/TLE-2/issues) en het GitHub Projects-bord
 
 ## Team
